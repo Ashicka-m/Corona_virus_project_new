@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="#" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="#" th:href="@{/css/home.min.css}" />
+</head>
+<body>
+<div class="container base">
+		<div class="row base-row">
+			<div class="col-3 menu">
+			<div class="logo mb-5 text-center text-light bg-dark pt-1 pb-1">
+			<h4>Flower Theatre</h4>
+			</div>
+				<ul class="list">
+					<li><a th:href="@{/}"><i class="fas fa-home"></i>&nbsp;&nbsp;Home</a></li>
+					<li><a th:href="@{/setting}"><i class="fas fa-cogs"></i>&nbsp;&nbsp;Setting</a></li>
+				<li><a th:href="@{/adminaddpage}"><i class="fas fa-users"></i>&nbsp;&nbsp;Add-movie</a></li>
+					<li><a th:classappend="${menu == 'allmovie'} ? 'text-dark' : ' '" th:href="@{/ViewAllMovie}"><i class="fas fa-history"></i>&nbsp;&nbsp;View AllMovies</a></li>
+					<li><a href=""><i class="fas fa-address-card"></i>&nbsp;&nbsp;About
+							us</a></li>
+					<li><a href=""><i class="fas fa-phone-square-alt"></i>&nbsp;&nbsp;Contact
+							us</a></li>
+					<li><a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Logout</a></li>
+				</ul>
+			</div>
+			<div class="col-9 history">
+				<div class="history-section">
+					<div class="history-head">
+						<p>
+							<span><i class="fas fa-user"></i></span>&nbsp;<span
+								class="name-user"
+								th:text="Admin"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><i
+								class="fas fa-envelope"></i> <sup><i class="fas fa-sms"></i></sup></span>
+						</p>
+					</div>
+<a th:href="@{/adminaddpage}" class="btn btn-success"><i class="bi bi-pencil"></i> Add Movies</a>
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th scope="col" class="text-primary">id</th>
+										<th scope="col" class="text-primary">Movie Name</th>
+										<th scope="col" class="text-primary">Movie Details</th>
+										<th scope="col" class="text-primary">image</th>
+										<th scope="col" class="text-primary">Edit</th>
+										<th scope="col" class="text-primary">Delete</th>
+						
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="history: ${hList}">
+										<th th:text="${history.movieId}"></th>
+										<th th:text="${history.movieName}"></th>
+										<th th:text="${history.movieDetails}"></th>
+										 <th><img th:src="${'data:images/jpg;base64,'+{history.image}}" height="100px"></th>
+										<th><a th:href="@{/editMovies/{movieId}(movieId=${history.movieId})}" class="btn btn-success"><i class="bi bi-pencil"></i> Edit</a></th>
+                                        <th><a th:href="@{/deleteMovie/{movieId}(movieId=${history.movieId})}" class="btn btn-danger"><i class="bi bi-trash"></i> Delete</a></th>
+									</tr>
+
+								</tbody>
+							</table>
+
+						
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Admin</title>
+<link rel="stylesheet" href="#" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="#" th:href="@{/css/home.min.css}" />
+</head>
+<body>
+<div class="container base">
+		<div class="row base-row">
+			<div class="col-3 menu">
+			<div class="logo mb-5 text-center text-light bg-dark pt-1 pb-1">
+			<h4>Flower Theatre</h4>
+			</div>
+	
+				<ul class="list">
+					<li><a th:href="@{/}"><i class="fas fa-home"></i>&nbsp;&nbsp;Home</a></li>
+					<li><a th:href="@{/register}"><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Register</a></li>
+					<li><a th:href="@{/login}"><i class="fas fa-users"></i>&nbsp;&nbsp;Login</a></li>
+
+					<li><a th:classappend="${menu == 'adminaddpage'} ? 'text-dark' : ' '" th:href="@{/adminaddpage}"><i class="fas fa-users"></i>&nbsp;&nbsp;Add-movie</a></li>
+					<li><a href=""><i class="fas fa-address-card"></i>&nbsp;&nbsp;About
+							us</a></li>
+					<li><a href=""><i class="fas fa-phone-square-alt"></i>&nbsp;&nbsp;Contact
+							us</a></li>
+				</ul>
+			</div>
+			<div class="col-9 main-dashboard">
+
+				<div class="main-dashboard-head">
+					
+				
+					<div class="main-dashboard-right">
+						<p>
+							<span><i class="fas fa-user"></i></span>&nbsp;<span
+								class="name-user"
+								th:text="Admin"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span><i
+								class="fas fa-envelope"></i> <sup><i class="fas fa-sms"></i></sup></span>
+						</p>
+					</div>
+
+
+				</div>
+				<div class="col-9 login-form">
+				<div class="login">
+					<form th:action="@{/moviedetailssave}" enctype="multipart/form-data" method="post">
+<div class="form-group">
+<label for="pname">Movie Name</label>
+<input type="text"  placeholder="Enter product name" name="mname" class="form-control"/>
+</div>
+<div class="form-group">
+<label for="quantity">Movie Details</label>
+<input type="text" placeholder="Enter quantity" name="mdetails" class="form-control"/>
+</div>
+
+<div class="form-group">
+<label for="price">Image</label>
+<input type="file" placeholder="Enter price" name="imagFile" class="form-control"/>
+</div>
+
+<button type="submit" class="btn btn-warning text-light"><i class="bi bi-save"></i> Add Movie</button>
+
+
+</form>
+
+
+<a th:href="@{/ViewAllMovies}">View all products</a>
+				</div>
+
+
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>
