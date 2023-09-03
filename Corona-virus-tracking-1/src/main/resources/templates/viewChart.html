@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Chart</title>
+<link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet"
+    href="https://code.highcharts.com/css/highcharts.css" />
+<script
+    src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+</head>
+
+<body>
+	<h2 th:value"${muURL}" th:text="${myURL}">Hello </h2>
+    <div class="card-header" style="text-align: center;">
+        <h2>Chart</h2>
+        <h2></h2>
+    </div>
+    <div class="card-body">
+       <canvas id="myChart" style="width:100%;text-size:2px;"></canvas>
+   </div>
+ <script type="text/javascript">
+	 $(document).ready(
+                function() {
+					
+                    $.ajax({
+						
+                        url : "/multiplelinechart",
+                        success : function(result) {
+						//alert("222");	
+						
+		         for(var key in result){
+				 // alert(result);
+				
+					var namecountry= [];
+				    	var datastotal=[];
+				    	
+			
+				    	
+				
+			     	
+			     	
+		    //alert("444");
+			for(var i = 0; i < result[key].length; i++){
+			//	alert("555");
+				namecountry.push(result[key][i].country);
+				datastotal.push(parseInt(result[key][i].latestTotalDeaths));
+				
+			}
+		//	alert(namecountry);
+			
+			
+			         drawChart(namecountry,datastotal);
+			         
+                      }
+                     //  alert(singleObject);
+                  }
+                });
+                  });
+                 
+        function drawChart(namecountry,datastotal) {
+			//alert(namecountry);
+        new Chart("myChart", {
+  type: "bar",
+  data: {
+    labels: namecountry,
+    datasets: [{
+      fill: false,
+      lineTension: 0,
+      backgroundColor: "rgba(0,0,255,1.0)",
+      borderColor: "rgba(0,0,255,0.1)",
+      data: datastotal
+    }]
+  },
+  
+  
+ 
+});
+           // alert(namecountry);
+        }
+ </script>
+</h2>
+</html>

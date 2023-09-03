@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+$(document).ready(
+                function() {
+                   $.ajax({
+	                url: "multiplelinechart",	
+           	    success: function(result){
+	          	var formatteddata = [];
+		          for(var key in result){
+			         var singleObject = {
+				    	name: '',
+				    	data: []
+				}
+			singleObject.name = key.toUpperCase();
+			for(var i = 0; i < result[key].length; i++){
+				singleObject.data.push(parseInt(result[key][i].latestTotalDeaths));
+			}
+			formatteddata.push(singleObject);
+		}
+		
+		drawMultipleLineChart(formatteddata);
+	}
+});
+});
+        function drawMultipleLineChart(formatteddata) {
+            Highcharts.chart('container-bar', {
+           title: {
+	        text: 'Solar Employment Growth by Sector, 2010-2019'
+	    },
+
+	    subtitle: {
+	        text: 'Source: thesolarfoundation.com'
+	    },
+
+	    yAxis: {
+	        title: {
+	            text: 'Number of Employees'
+	        }
+	    },
+	    legend: {
+	        layout: 'vertical',
+	        align: 'right',
+	        verticalAlign: 'middle'
+	    },
+
+	    plotOptions: {
+	        series: {
+	            label: {
+	                connectorAllowed: false
+	            },
+	            pointStart: 2011
+	        }
+	    },
+
+	    series: formatteddata,
+
+	    responsive: {
+	        rules: [{
+	            condition: {
+	                maxWidth: 500
+	            },
+	            chartOptions: {
+	                legend: {
+	                    layout: 'horizontal',
+	                    align: 'center',
+	                    verticalAlign: 'bottom'
+	                }
+	            }
+	        }]
+	    }
+            });
+        }
+
+</body>
+</html>
+
+
+
+
+
+ <script type="text/javascript">
+	 $(document).ready(
+                function() {
+					
+                    $.ajax({
+						
+                        url : "/multiplelinechart",
+                        success : function(result) {
+						// alert("222");	
+		         for(var key in result){
+				//  alert("333");
+				    	var name= [];
+				    	var datas= [];
+				
+			     	
+			     	
+		  //    alert(name);
+			for(var i = 0; i < result[key].length; i++){
+				name.push(result[key][i].country);
+				datas.push(parseInt(result[key][i].latestTotalDeaths));
+				
+			}
+			//alert(name);
+			         drawChart(name,datas);
+			          alert(datas);
+                      }
+                  }
+                });
+                  });
+                 
+        function drawChart(country,latestTotalDeaths) {
+           Highcharts.chart('container-bar', {
+                chart : {
+                    type : 'column',
+                    styledMode : true
+                },
+                title : {
+                    text : 'Blog Page view count'
+                },
+                xAxis : [ {
+                    title : {
+                        text : 'country'
+                    },
+                    categories : country
+                } ],
+                yAxis : [ {
+                    className : 'highcharts-color-0',
+                    title : {
+                        text : 'Page View Count'
+                    }
+                } ],
+                series : [ {
+                    data : latestTotalDeaths
+                } ]
+            });
+        }
+        
+	 
+	 
+	 
+        
+ </script>

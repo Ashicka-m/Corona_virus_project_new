@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet" href="#" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" href="#" th:href="@{/css/home.min.css}" />
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="p-3 mb-2 bg-info text-dark">
+    <h1>Corona Virus Tracker application</h1><br>
+    <p>This Application List the Current number of cases reported across the globe</p>
+    <div class="jumbotron" style="background-color: antiquewhite;">
+		<div class="jumbotron" style="background-color:bisque;">
+		<div class="badge bg-danger text-line">
+			<a href="#" th:href="@{/viewChart}" role="button" class="btn btn-danger">
+				
+    <h1 class="display-4" th:text="${totalDeathsReported}"></h1>
+    </a>
+    </div>
+    </div>
+   
+    <p class="lead">Total cases reported as of Today</p>
+    </div>
+    </div>
+    <div class="container">
+  <table class="table table-striped">
+      <tr>
+        <th>State</th>
+        <th>Country</th>
+        <th>Total Deaths Reported</th>
+         <th>Changes Since Last Day</th>
+      </tr>
+      <tr th:each="locationstate : ${LocationStates}">
+        <td th:text="${locationstate.state}"></td>
+        <td th:text="${locationstate.country}"></td>
+        <td th:text="${locationstate.latestTotalDeaths}">0</td>
+        <td th:text="${locationstate.differFromPrevay}">0</td>
+      </tr>
+    </table>
+    </div>
+</body>
+</html>
