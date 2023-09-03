@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.dao.RegisterDao;
+import com.example.demo.MailService;
 import com.example.demo.MovieRepo;
 import com.example.model.MovieDetails;
 import com.example.model.OrderHistory;
@@ -48,7 +49,8 @@ public class HomeController {
 	@Autowired
 	private MovieRepo movieRepo;
 	
-	
+	@Autowired
+	private MailService mser;
 	
 
 	
@@ -217,6 +219,9 @@ public class HomeController {
 
 	}
 	
+	
+	
+	
 	@PostMapping("/book-seat")
 	public String bookSeat(@ModelAttribute("Seat") Seat seat, @RequestParam("movieName") String movieName,
 			HttpSession session, Model m) {
@@ -225,9 +230,10 @@ public class HomeController {
 		Date todayDate = Date.from(currentDate.atStartOfDay(defaultZoneId).toInstant());
 		LocalDate date = (LocalDate) session.getAttribute("bookingdate");
 		String time = (String) session.getAttribute("bookingtime");
+		System.out.println(movieName+"checkin++++++++"+seat.getSeatNo());
 		System.out.println(seat.getSeatNo().equals(null) + " wooo" + movieName.equals(null));
 		Register object = (Register) session.getAttribute("user");
-
+      //   System.out.println(object+"reigeter-----");
 		if (object == null) {
 			return "redirect:/loginForm";
 		} else if ((seat.getSeatNo().isEmpty()) && (movieName.equals(null))) {
@@ -249,24 +255,35 @@ public class HomeController {
 				}
 				seat.setTotal(sum);
 				seat.setPrice(price);
-
+				//Register customer = (Register) session.getAttribute("user");
+               
 				OrderHistory history = new OrderHistory(seat.getSeatNo(), price, sum, movieName, todayDate, date2, time,object);
 				dao.saveSeat(seat, object, date2, time);
 				dao.saveHistory(history, object);
 				List<String> seatNo1 = new ArrayList<String>();
 				List<Register> all = dao.getAll();
+				//String login=dao.login(login, login);
+				//List<Seat> fullhistory =dao.getAllSeat(date, time);
+				
 				for (Register c : all) {
 					for (Seat s : c.getSeat()) {
+						
 						for (String s1 : s.getSeatNo()) {
 							seatNo1.add(s1);
+						//	System.out.println(seatNo1+"---------");
 						}
 
 					}
 				}
-
+				System.out.println(movieName+"checking====");
+				mser.sendEamil(object.getEmail(),"Booked your seat"," Name = "+object.getName() + " Movie Name = "+movieName);
+			//	List<Seat> fullhistory =dao.getAllSeat(date, time);
 				m.addAttribute("seats", seatNo1);
 				session.setAttribute("user", object);
 				session.setAttribute("msg", "your seat book successsfully");
+				
+				
+				
 				return "redirect:/home";
 
 			} else {
@@ -306,6 +323,7 @@ public class HomeController {
 				m.addAttribute("seats", seatNo1);
 				session.setAttribute("user", object);
 				session.setAttribute("msg", "your seat book successsfully");
+				mser.sendEamil(object.getEmail(),"Booked your seat"," Name = "+object.getName() + " Movie Name = "+ movieName);
 				return "redirect:/home";
 
 			} else {

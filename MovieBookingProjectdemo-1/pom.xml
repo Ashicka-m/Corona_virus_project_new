@@ -74,7 +74,10 @@
 <!-- https://mvnrepository.com/artifact/org.apache.activemq/artemis-jakarta-server -->
 <!-- https://mvnrepository.com/artifact/org.apache.activemq/artemis-jakarta-server -->
 
-
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-mail</artifactId>
+</dependency>
 
 
 

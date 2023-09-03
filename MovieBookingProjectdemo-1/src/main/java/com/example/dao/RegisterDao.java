@@ -78,6 +78,8 @@ public class RegisterDao {
 		Register register = repo.findByEmailAndPassword(email, password);
 		return register;
 	}
+	
+	
 	public List<MovieDetails> getAllMovie(){
 		List<MovieDetails> list = this.movieRepo.findAll();
 		
